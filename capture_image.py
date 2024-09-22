@@ -7,6 +7,7 @@ from src.image.evaluate_light import evaluate_light
 from picamera2 import Picamera2
 from src.image.configure_camera import configure_camera
 from datetime import datetime
+from src.overlay.add_image_overlay import overlay_image_with_text
 
 # Set the config path
 BASE_PATH = os.path.dirname(__file__) 
@@ -67,7 +68,7 @@ def capture_image(config):
 
         # Configure the camera
         daylight = True  # Adjust based on your logic
-        still_config = configure_camera(picam2, config, daylight)
+        still_config = configure_camera(picam2, config, daylight, lux)
         picam2.configure(still_config)
         log(logger, "Camera configured for still capture.")
 
@@ -105,6 +106,8 @@ def capture_image(config):
         # Stop the camera after capturing the image
         picam2.stop()
         log(logger, "Camera stopped after image capture.")
+
+        overlay_image_with_text(file_name, output_image_path=file_name)
 
         # Update symlink to the latest image
         # Create or update symlink to the latest image

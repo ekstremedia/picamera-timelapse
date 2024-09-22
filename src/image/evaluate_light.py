@@ -5,6 +5,7 @@ from picamera2 import Picamera2
 from datetime import datetime
 import yaml
 from src.log.logger import get_logger, log, log_warning
+from src.overlay.add_to_overlay_data import add_metadata_to_overlay
 
 # Set base directory for the project (two levels up)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
@@ -134,6 +135,8 @@ def evaluate_light():
 
     # Extract the Lux value for display purposes
     lux = round(metadata.get('Lux', 'N/A'), 1) if metadata else 'N/A'
+
+    add_metadata_to_overlay(metadata)  # Add the Lux value etc to the overlay data
 
     # Save metadata to the file
     save_metadata_to_file(metadata, METADATA_FILE)
