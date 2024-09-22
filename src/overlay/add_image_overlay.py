@@ -50,8 +50,6 @@ def overlay_image_with_text(input_image_path, output_image_path=None, text=None)
     metadata = overlay_data.get('camera_metadata')
     quality = overlay_data.get('Quality', QUALITY)
     
-    print(overlay_data)
-    
     # Load camera name if text is not provided
     if text is None:
         text = load_camera_name()
