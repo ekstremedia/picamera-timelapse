@@ -1,0 +1,9 @@
+config.yaml
+**/__pycache__/
+data/
+venv/
+logs/
+temp/
+data/
+.vscode/settings.json
+database/lux_data.db
