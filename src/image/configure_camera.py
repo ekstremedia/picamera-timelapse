@@ -3,7 +3,7 @@
 import libcamera
 # from scripts.image.set_hdr_status import set_hdr_state  # Importing HDR functions
 
-def configure_camera(picam2, config, daylight, iso=None, shutter_speed=None, logger=None):
+def configure_camera(picam2, config, daylight, lux=None):
     focus_mode = libcamera.controls.AfModeEnum.Manual if config['camera_settings']['focus_mode'] == 'manual' else libcamera.controls.AfModeEnum.Auto  # type: ignore
     lens_position = config['camera_settings']['lens_position'] if config['camera_settings']['focus_mode'] == 'manual' else None
 
@@ -15,6 +15,9 @@ def configure_camera(picam2, config, daylight, iso=None, shutter_speed=None, log
         "LensPosition": lens_position,
         "ColourGains": tuple(config['camera_settings']['colour_gains_day']) if daylight else tuple(config['camera_settings']['colour_gains_night']),
     }
+    
+    shutter_speed = config['camera_settings']['shutter_speed_night']
+    iso = config['camera_settings']['iso_night']
 
     if daylight:
         # Ensure auto exposure is enabled

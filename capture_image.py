@@ -52,19 +52,18 @@ def save_metadata(metadata):
         # print(f"Metadata saved to {METADATA_FILE}")
     except Exception as e:
         print(f"Error saving metadata: {e}")
+        
 def capture_image(config):
     try:
         log(logger, "Starting image capture...")
 
         # Get the Lux reading without passing picam2
         lux = evaluate_light()
-        
-        
+        log(logger, f"Lux value: {lux}")
+
         # Initialize the camera
         picam2 = Picamera2()
         log(logger, "Camera initialized.")
-
-        log(logger, f"Lux value: {lux}")
 
         # Configure the camera
         daylight = True  # Adjust based on your logic
@@ -86,7 +85,8 @@ def capture_image(config):
         now = datetime.now()
         dir_name = os.path.join(config['image_output']['root_folder'], now.strftime(config['image_output']['folder_structure']))
         os.makedirs(dir_name, exist_ok=True)
-        file_name = os.path.join(dir_name, f"{config['image_output']['filename_prefix']}{now.strftime('%Y_%m_%d_%H_%M_%S')}.{config['image_output']['image_extension']}")
+        time_format = config['image_output'].get('filename_time_format', '%Y_%m_%d_%H_%M_%S')
+        file_name = os.path.join(dir_name, f"{config['image_output']['filename_prefix']}{now.strftime(time_format)}.{config['image_output']['image_extension']}")
 
         # Capture request and metadata
         request = picam2.capture_request()
