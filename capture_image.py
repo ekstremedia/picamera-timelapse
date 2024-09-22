@@ -52,7 +52,7 @@ def save_metadata(metadata):
             json.dump(metadata, f, indent=4)
         # print(f"Metadata saved to {METADATA_FILE}")
     except Exception as e:
-        print(f"Error saving metadata: {e}")
+        log_error(f"Error saving metadata: {e}")
         
 def capture_image(config):
     try:
@@ -67,8 +67,8 @@ def capture_image(config):
         log(logger, "Camera initialized.")
 
         # Configure the camera
-        daylight = True  # Adjust based on your logic
-        still_config = configure_camera(picam2, config, daylight, lux)
+        still_config = configure_camera(picam2, config, lux)
+        
         picam2.configure(still_config)
         log(logger, "Camera configured for still capture.")
 
