@@ -8,9 +8,6 @@ from datetime import datetime
 import locale
 from src.overlay.add_to_overlay_data import load_overlay_data
 
-# Set the locale to Norwegian
-# locale.setlocale(locale.LC_TIME, "nb_NO.UTF-8")
-
 # Default configuration
 OVERLAY_IMAGE_PATH = os.path.join(os.path.dirname(__file__), '../../overlay/overlay.png')
 FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -18,9 +15,17 @@ FONT_SIZE = 50
 TEXT_COLOR = (255, 255, 255)  # White text, no alpha channel for JPEG
 TIME_FONT_SIZE = 70  # Font size for the time
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), '../../config.yaml')
-QUALITY = 70
+QUALITY = 80
 
-def load_camera_name(config_path=CONFIG_PATH):
+# Load the configuration file
+with open(CONFIG_PATH, 'r') as file:
+    config = yaml.safe_load(file)
+
+# Set the locale to Norwegian
+if config.get('overlay', {}).get('locale'):
+    locale.setlocale(locale.LC_TIME, "nb_NO.UTF-8")
+
+def load_camera_name():
     """
     Loads the camera name from the YAML configuration file.
 
@@ -30,8 +35,7 @@ def load_camera_name(config_path=CONFIG_PATH):
     Returns:
         str: The camera name.
     """
-    with open(config_path, 'r') as file:
-        config = yaml.safe_load(file)
+
     return config.get('camera_settings', {}).get('name', "Camera Name")
 
 def overlay_image_with_text(input_image_path, output_image_path=None, text=None):
