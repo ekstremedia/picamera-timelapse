@@ -1,0 +1,43 @@
+log:
+  capture_image: true
+  timelapse: false
+  evaluate_light: true
+  configure_camera: true
+  calculate_iso_and_shutter: true
+  run_timelapse: true
+  levels: ['info', 'warning', 'error']  # Specify log levels here, or use 'all'
+
+image:
+  evaluate_light_every: 0                    # Evaluate light every 60 seconds, 0 for every photo
+
+image_output:
+  root_folder: '/var/www/html/images/'        # Root folder for images
+  folder_structure: '%Y/%m/%d/'               # 2023/06/15/
+  filename_prefix: 'test_tl_'               # Prefix for image filenames  
+  filename_time_format: "%Y_%m_%d_%H_%M_%S"   # Adds timestamp to end of filename, like: 2023_06_15_12_34_56
+  status_file: '/var/www/html/status.jpg'     # Status image file, latest image will be symlinked to this file, if status_file is set
+  image_extension: "jpg"
+
+camera_settings:
+  name: "Kringelen TEST"
+  main_size: [3840, 2160]
+  lores_size: [1280, 720]
+  display: 'main'
+  awb_enable: False
+  awb_mode: 'Daylight'
+  colour_gains_day: [2.2, 1.9]    # Daytime gains
+  colour_gains_night: [1.4, 2.2]  # Nighttime gains
+  focus_mode: 'manual'
+  lens_position: 0.0              # 0.0 = infinity, 1 sharp, 15 unsharp
+  hdr: false
+  image_quality: 85               # JPEG quality level, where 0 is the worst quality and 95 is best.
+  compress_level: 6               # PNG compression level, where 0 gives no compression, 1 is the fastest that actually does any compression, and 9 is the slowest.
+  light_threshold: 50             # Adjust as needed for day/night transition
+  iso_day: 1
+  iso_night: 8
+  shutter_speed_day: 0            # 0 means auto
+  shutter_speed_night: 20000000   # In microseconds (1 second)
+  exposure_value: 1               # Positive values for brighter exposure, negative for darker. Set positive if image is dark.
+
+timelapse:
+  interval: 30                    # Interval in seconds
