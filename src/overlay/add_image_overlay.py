@@ -9,7 +9,7 @@ import locale
 from src.overlay.add_to_overlay_data import load_overlay_data
 
 # Set the locale to Norwegian
-locale.setlocale(locale.LC_TIME, "nb_NO.UTF-8")
+# locale.setlocale(locale.LC_TIME, "nb_NO.UTF-8")
 
 # Default configuration
 OVERLAY_IMAGE_PATH = os.path.join(os.path.dirname(__file__), '../../overlay/overlay.png')
