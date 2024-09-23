@@ -79,9 +79,9 @@ def capture_image(config):
         # Allow time for auto exposure to adjust
         time.sleep(2)  # Increase if necessary
 
-        # Optionally, capture and discard initial frames
-        for _ in range(3):
-            picam2.capture_request().release()
+        # # Optionally, capture and discard initial frames
+        # for _ in range(3):
+        #     picam2.capture_request().release()
 
         now = datetime.now()
         dir_name = os.path.join(config['image_output']['root_folder'], now.strftime(config['image_output']['folder_structure']))
