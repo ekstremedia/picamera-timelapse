@@ -117,8 +117,6 @@ def capture_image(config):
                 os.remove(symlink_path)
             os.symlink(file_name, symlink_path)
 
-            if logger:
-                log(logger, f"Symlink updated: {symlink_path} -> {file_name}")
         except Exception as e:
             log_error(f"Error updating symlink: {e}")
             if logger:

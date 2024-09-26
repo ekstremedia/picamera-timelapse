@@ -8,8 +8,12 @@ log:
   levels: ['info', 'warning', 'error']  # Specify log levels here, or use 'all'
 
 image:
-  evaluate_light_every: 0                    # Evaluate light every 60 seconds, 0 for every photo
-
+  evaluate_light_every: 0                   # Evaluate light every 60 seconds, 0 for every photo
+  lux_day_night_threshold: 30               # Threshold for day/night transition
+  lux_night_min: 0.5                        # Minimum Lux value (darkest night)
+  shutter_speed_day: 0                      # 0 for auto-exposure during the day
+  shutter_speed_start: 82881                # Start value for night exposure   
+  
 image_output:
   root_folder: '/var/www/html/images/'        # Root folder for images
   folder_structure: '%Y/%m/%d/'               # 2023/06/15/
@@ -17,6 +21,10 @@ image_output:
   filename_time_format: "%Y_%m_%d_%H_%M_%S"   # Adds timestamp to end of filename, like: 2023_06_15_12_34_56
   status_file: '/var/www/html/status.jpg'     # Status image file, latest image will be symlinked to this file, if status_file is set
   image_extension: "jpg"
+
+overlay:
+  enabled: true
+  locale: 'nb_NO.UTF-8'
 
 camera_settings:
   name: "Kringelen TEST"

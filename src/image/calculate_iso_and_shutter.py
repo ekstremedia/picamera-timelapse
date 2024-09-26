@@ -10,15 +10,15 @@ def calculate_iso_and_shutter(lux, config):
     log(logger, f"Calculating ISO and shutter speed for Lux value: {lux}")
 
     # Define Lux thresholds
-    lux_day_night_threshold = 5.0   # Start manual adjustments below this Lux
-    lux_night_min = 0.5             # Minimum Lux value (darkest night)
+    lux_day_night_threshold = config['image']['lux_day_night_threshold']    # Start manual adjustments below this Lux
+    lux_night_min = config['image']['lux_night_min']                        # Minimum Lux value (darkest night)
 
     # Get ISO and shutter speed settings from config
-    iso_day = config['camera_settings']['iso_day']      # Auto ISO during the day
+    iso_day = config['camera_settings']['iso_day']                                    # Auto ISO during the day
     iso_night = config['camera_settings']['iso_night']
-    shutter_speed_day = 0                              # 0 for auto-exposure during the day
-    shutter_speed_start = 119305                        # Start manual shutter speed from here (µs)
-    shutter_speed_night = config['camera_settings']['shutter_speed_night']  # Max shutter speed at night
+    shutter_speed_day = config['image']['shutter_speed_day']                     # 0 for auto-exposure during the day
+    shutter_speed_start = config['image']['shutter_speed_start']                  # Start manual shutter speed from here (µs)
+    shutter_speed_night = config['camera_settings']['shutter_speed_night']            # Max shutter speed at night
 
     if lux >= lux_day_night_threshold:
         # Daytime settings
