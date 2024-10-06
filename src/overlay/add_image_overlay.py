@@ -108,7 +108,7 @@ def overlay_image_with_text(input_image_path, output_image_path=None, text=None)
             )
             overlay_text_right_line_2 = (
                 f"Exposuretime: {metadata['ExposureTime']}, "
-                f"LensPos: {metadata['LensPosition']}, "
+                f"LensPos: {config['camera_settings']['lens_position']}, "
                 f"SensorTemp: {metadata['SensorTemperature']}"
             )
             draw.text((2450, 25), overlay_text_right, font=overlay_font, fill=TEXT_COLOR)
