@@ -34,7 +34,7 @@ if __name__ == "__main__":
             script_path = os.path.join(os.path.dirname(__file__), 'capture_image.py')
             subprocess.run(['python3', script_path], check=True)
         except subprocess.CalledProcessError as e:
-            log(logger, f"Error during image capture: {e}")
+            log(logger, f"RTL: Error during image capture: {e}")
         
         # Calculate the time taken to capture the image
         capture_duration = time.time() - start_time

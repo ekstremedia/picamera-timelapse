@@ -123,7 +123,7 @@ def capture_image(config):
                 log(logger, f"Error updating symlink: {e}")   
 
     except Exception as e:
-        log_error(logger, f"Error during image capture: {e}")
+        log_error(logger, f"CI: Error during image capture: {e}")
         
 if __name__ == "__main__":
     try:
