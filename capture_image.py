@@ -58,72 +58,57 @@ def capture_image(config):
     try:
         log(logger, "Starting image capture...")
 
-        # Get the Lux reading without passing picam2
+        # Debug: Evaluate light value
         lux = evaluate_light()
         log(logger, f"Lux value: {lux}")
 
-        # Initialize the camera
         picam2 = Picamera2()
         log(logger, "Camera initialized.")
 
-        # Configure the camera
         still_config = configure_camera(picam2, config, lux)
-        
         picam2.configure(still_config)
         log(logger, "Camera configured for still capture.")
 
-        # Start the camera
         picam2.start()
         log(logger, "Camera started for image capture.")
 
-        # Allow time for auto exposure to adjust
-        time.sleep(2)  # Increase if necessary
-
-        # # Optionally, capture and discard initial frames
-        # for _ in range(3):
-        #     picam2.capture_request().release()
+        time.sleep(2)  # Allow time for auto exposure
 
         now = datetime.now()
-        dir_name = os.path.join(config['image_output']['root_folder'], now.strftime(config['image_output']['folder_structure']))
-        os.makedirs(dir_name, exist_ok=True)
+        output_folder = os.path.join(config['image_output']['root_folder'], now.strftime(config['image_output']['folder_structure']))
+        os.makedirs(output_folder, exist_ok=True)
         time_format = config['image_output'].get('filename_time_format', '%Y_%m_%d_%H_%M_%S')
-        file_name = os.path.join(dir_name, f"{config['image_output']['filename_prefix']}{now.strftime(time_format)}.{config['image_output']['image_extension']}")
+        file_name = os.path.join(output_folder, f"{config['image_output']['filename_prefix']}{now.strftime(time_format)}.{config['image_output']['image_extension']}")
 
-        # Capture request and metadata
         request = picam2.capture_request()
         if request:
             image = request.make_image("main")
             metadata = request.get_metadata()
+            log(logger, f"Captured metadata: {metadata}")
             request.release()
             save_metadata(metadata)
         else:
             raise ValueError("Failed to capture request, request is None")
-        
-        # Save the image file
+
         image.save(file_name)
         log(logger, f"Image saved to {file_name}")
 
-        # Stop the camera after capturing the image
         picam2.stop()
         log(logger, "Camera stopped after image capture.")
 
         overlay_image_with_text(file_name, output_image_path=file_name)
 
-        # Update symlink to the latest image
-        # Create or update symlink to the latest image
         symlink_path = config['image_output']['status_file']
         try:
             if os.path.islink(symlink_path) or os.path.exists(symlink_path):
                 os.remove(symlink_path)
             os.symlink(file_name, symlink_path)
-
         except Exception as e:
-            log_error(f"Error updating symlink: {e}")
-            if logger:
-                log(logger, f"Error updating symlink: {e}")   
-
+            log_error(logger, f"Error updating symlink: {e}")
+            log(logger, f"Error updating symlink: {e}")
     except Exception as e:
         log_error(logger, f"CI: Error during image capture: {e}")
+
         
 if __name__ == "__main__":
     try:
