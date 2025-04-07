@@ -132,6 +132,7 @@ def evaluate_light():
     picam2.stop()
     picam2.close()  # Ensure the camera is properly closed
     log(logger, "Camera stopped after light evaluation.")
+    log(metadata)
 
     # Extract the Lux value for display purposes
     lux = round(metadata.get('Lux', 'N/A'), 1) if metadata else 'N/A'
