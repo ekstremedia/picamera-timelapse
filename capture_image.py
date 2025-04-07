@@ -1,3 +1,4 @@
+import traceback
 import json
 import os
 import time
@@ -107,9 +108,9 @@ def capture_image(config):
             log_error(logger, f"Error updating symlink: {e}")
             log(logger, f"Error updating symlink: {e}")
     except Exception as e:
-        log_error(logger, f"CI: Error during image capture: {e}")
+        detailed_error = traceback.format_exc()
+        log_error(logger, f"CI: Error during image capture: {e}\n{detailed_error}")
 
-        
 if __name__ == "__main__":
     try:
         # Load the configuration
