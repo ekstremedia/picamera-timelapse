@@ -1,4 +1,7 @@
-# picamera-timelapse
+# This is now archived. Go here for the new version: https://github.com/ekstremedia/raspilapse
+
+
+## picamera-timelapse
 
 If you install this on a freshly install Raspberry Pi 4/5, the first thing you need to do is to update the system and then reboot:
 
